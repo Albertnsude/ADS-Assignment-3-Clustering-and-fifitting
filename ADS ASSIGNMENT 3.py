@@ -14,19 +14,19 @@ import scipy.optimize as opt
 import numpy as np
 import errors as err
 
-# Read the World Bank Gdp of countries data into a dataframe
+# Reading the World Gdp of countries data into a dataframe
 GDP_per_cap = pd.read_csv('Gdp_of_Countries.csv', skiprows=4)
 GDP_per_cap = GDP_per_cap.dropna().drop(['Indicator Code', 'Country Code', 'Indicator Name'], axis=1)
 GDP_per_cap.set_index('Country Name', drop=True, inplace=True)
 print(GDP_per_cap)
 
-# 60 countries are randomly chosen from the list
+# 60 countries are randomly selected from the list
 selected_countries = random.sample(list(GDP_per_cap.index), 60)
 df_selected = GDP_per_cap.loc[selected_countries]
 
 print(df_selected)
 
-# List of countries not needed are removed
+# List of countries that are not needed are removed
 countries_to_remove = ['East Asia & Pacific (excluding high income)	',
                        'IDA total',
                        'Euro area',
@@ -39,11 +39,11 @@ countries_to_remove = ['East Asia & Pacific (excluding high income)	',
                        'Latin America & Caribbean (excluding high income)',
                        'IDA only','Latin America & the Caribbean (IDA & IBRD countries)','Sub-Saharan Africa (IDA & IBRD countries)	', 'Early-demographic dividend', 'Pre-demographic dividend', 'Low & middle income', 'Africa Eastern and Southern', 'East Asia & Pacific (excluding high income)', 'Euro area', 'Latin America & Caribbean', 'Africa Eastern and Southern', 'World', 'Sub-Saharan Africa (IDA & IBRD countries)']
 
-# The countries are removed from the DataFrame
+# The countries are expelled from the DataFrame
 df_selected = df_selected[~df_selected.index.isin(countries_to_remove)]
 
 
-# Printing the resulting DataFrame
+# Print the resulting DataFrame
 print(df_selected.index)
 
 GDP_per_cap1 = df_selected[["1960", "1970", "1980", "1990", "2000", "2010", "2020"]]
@@ -132,7 +132,7 @@ def logistics(t, a, k, t0):
     f = a / (1.0 + np.exp(-k * (t - t0)))
     return f
 
-# Convert index to numeric and use it in curve fitting
+# Converting index to numeric and use it in curve fitting
 df_pop_countries.index = pd.to_numeric(df_pop_countries.index)
 
 popt, pcorr = opt.curve_fit(logistics, df_pop_countries.index, df_pop_countries["United States"], p0=(16e8, 0.04, 1985.0))
@@ -270,7 +270,7 @@ for i, country in enumerate(countries):
     axs[i].set_title(f"Polynomial Fit for {country}")
     axs[i].legend(loc="upper left")
 
-# Adjusting the layout for neat presentation
+# # Adjust layout for neatness
 plt.tight_layout()
 plt.show()
 
