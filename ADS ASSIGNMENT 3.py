@@ -46,7 +46,7 @@ df_selected = df_selected[~df_selected.index.isin(countries_to_remove)]
 # Print the resulting DataFrame
 print(df_selected.index)
 
-GDP_per_cap1 = df_selected[["1960", "1970", "1980", "1990", "2000", "2010", "2020"]]
+GDP_per_cap1 = df_selected[["1960", "1970", "1980", "1990", "2000", "2010"]]
 print(GDP_per_cap1)
 
 GDP_per_cap1 = GDP_per_cap1.drop(["1960"], axis=1)
@@ -57,7 +57,7 @@ pd.plotting.scatter_matrix(GDP_per_cap1, figsize=(9, 9), s=5, alpha=0.8)
 plt.show()
 
 # Columns are extracted for the purpose of fitting, also using copy(), prevents changes in order to get df_fit to affect df_fish.
-GDP_per_cap1_fit = GDP_per_cap1[["1980", "2020"]].copy()
+GDP_per_cap1_fit = GDP_per_cap1[["1970", "2010"]].copy()
 
 # normalise dataframe and inspect result
 # normalisation is done only on the extract columns. .copy() prevents
@@ -95,10 +95,10 @@ for label, group in grouped:
     print()
 
 # Clusters are plotted with labels
-plt.scatter(GDP_per_cap1_fit["1980"], GDP_per_cap1_fit["2020"], c=kmeans.labels_, cmap="Set1")
+plt.scatter(GDP_per_cap1_fit["1960"], GDP_per_cap1_fit["2010"], c=kmeans.labels_, cmap="Set1")
 plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], c="k", marker="d", s=80)
-plt.xlabel("1980")
-plt.ylabel("200")
+plt.xlabel("1960")
+plt.ylabel("2010")
 plt.title("CLUSTER GDP OF COUNTRIES")
 plt.show()
 
@@ -110,7 +110,7 @@ df_pop = df_pop.dropna().drop(['Indicator Code', 'Country Code', 'Indicator Name
 df_pop.set_index('Country Name', drop=True, inplace=True)
 print(df_pop)
 # Defining countries of choice and transposing the dataframe
-countries = ['Korea, Rep.', 'United States']
+countries = ['Japan', 'United States']
 
 df_pop_countries = df_pop.loc[countries]
 
@@ -145,7 +145,7 @@ df_pop_countries["pop_logistics"] = logistics(df_pop_countries.index, *popt)
 
 # call function to calculate upper and lower limits with extrapolation
 # create extended year range
-years = np.arange(1960, 2051)
+years = np.arange(1950, 2051)
 lower, upper = err.err_ranges(years, logistics, popt, sigmas)
 
 plt.figure()
@@ -161,7 +161,7 @@ plt.show()
 
 fig, axs = plt.subplots(2, 1, figsize=(10, 10))  # create 2 subplots in 1 column
 
-countries = ['Korea, Rep.', 'United States']
+countries = ['Japan', 'United States']
 
 # Initial parameters for each country with difference are considered
 p0_values = [(16e8, 0.04, 1985.0), (16e8, 0.03, 1980.0)]  # adjust these initial guesses as needed
@@ -174,7 +174,7 @@ for i, country in enumerate(countries):
     sigmas = np.sqrt(np.diag(pcorr))
 
     # Create extended year range
-    years = np.arange(1960, 2051)
+    years = np.arange(1950, 2051)
 
     # Calculate the fitted GDP and the confidence intervals
     pop_logistics = logistics(years, *popt)
