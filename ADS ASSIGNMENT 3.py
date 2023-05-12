@@ -138,7 +138,7 @@ df_pop_countries.index = pd.to_numeric(df_pop_countries.index)
 popt, pcorr = opt.curve_fit(logistics, df_pop_countries.index, df_pop_countries["United States"], p0=(16e8, 0.04, 1985.0))
 print("Fit parameter", popt)
 
-# extract variances and calculate sigmas
+# Extract variances and calculate sigmas
 sigmas = np.sqrt(np.diag(pcorr))
 
 df_pop_countries["pop_logistics"] = logistics(df_pop_countries.index, *popt)
@@ -187,8 +187,8 @@ for i, country in enumerate(countries):
 
     axs[i].set_title(f"logistics function for {country}")
     axs[i].legend(loc="upper left")
-
-plt.tight_layout()  # adjust the subplots to fit in to the figure area.
+# Adjust the subplots to fit in to the figure area.
+plt.tight_layout()  
 plt.show()
 
 """
@@ -253,7 +253,7 @@ df_pop_countries.index = df_pop_countries.index.astype(int)
 # Initialize a figure
 fig, axs = plt.subplots(1, 2, figsize=(15,7))
 
-# Loop over the countries list
+# Loop the countries over the list
 for i, country in enumerate(countries):
     popt, pcorr = curve_fit(poly, df_pop_countries.index, df_pop_countries[country])
     print(f"Fit parameters for {country}: ", popt)
@@ -270,7 +270,7 @@ for i, country in enumerate(countries):
     axs[i].set_title(f"Polynomial Fit for {country}")
     axs[i].legend(loc="upper left")
 
-# # Adjust layout for neatness
+# Adjust layout for neat presentation
 plt.tight_layout()
 plt.show()
 
